@@ -157,7 +157,11 @@ void loadImage()
     
     SDL_FreeSurface(image);
     
-    SDL_RenderCopy(renderer2, text, NULL, NULL);
+    SDL_Rect dest = {WIDTH/2, HEIGHT/2, 50, 50};
+    
+    
+    
+    SDL_RenderCopy(renderer2, text, NULL, &dest);
     SDL_RenderPresent(renderer2);
     
     SDL_RenderClear(renderer2);
