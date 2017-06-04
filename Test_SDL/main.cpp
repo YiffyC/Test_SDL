@@ -19,6 +19,13 @@
 #undef main
 
 
+struct personnage
+{
+    int x;
+    int y;
+    
+};
+
 // Variables
 SDL_Window* window; //pointeur fenetre
 SDL_Renderer* renderer;
@@ -135,7 +142,7 @@ void checkWindow()
 }
 
 
-void loadImage()
+void loadImage(personnage perso)
 {
     
     SDL_Texture  *text;
@@ -160,7 +167,7 @@ void loadImage()
     
     
     // On centre le rectangle
-    SDL_Rect dest = {(WIDTH/2)-(imageW/2), HEIGHT/2-(imageH/2), 50, 50};
+    SDL_Rect dest = {(perso.x)-(imageW/2), (perso.y)-(imageH/2), 50, 50};
     
     
     
@@ -188,6 +195,7 @@ void testInput ()
                     switch (event.key.keysym.sym)
                 {
                         case SDLK_UP:
+                        
                             std::cout << "Fleche du haut\n";
                             break;
                             
@@ -222,6 +230,7 @@ void testInput ()
 
 
 
+
 int main(int argc, const char * argv[])
 {
     
@@ -231,14 +240,70 @@ int main(int argc, const char * argv[])
     
     initSDL();
     
+    personnage perso;
+    perso.x = HEIGHT/2;
+    perso.y = HEIGHT/2;
+    
+    
     
     createWindow();
     checkWindow();
     
-    loadImage();
+    loadImage(perso);
     
-    testInput();
+    //testInput();
     //myRender();
+    
+    
+    SDL_Event event;
+    
+    while(1)
+    {
+        while (SDL_PollEvent(&event))
+        {
+            switch( event.type )
+            {
+                    
+                    
+                    /* Clavier*/
+                case SDL_KEYDOWN:
+                    
+                    switch (event.key.keysym.sym)
+                {
+                    case SDLK_UP:
+                        
+                        perso.x++;
+                        
+                        std::cout << perso.x;
+                        break;
+                        
+                    case SDLK_DOWN:
+                        std::cout << "Fleche du bas\n";
+                        break;
+                        
+                    case SDLK_RIGHT:
+                        std::cout << "Fleche de droite\n";
+                        break;
+                        
+                    case SDLK_LEFT:
+                        std::cout << "Fleche de gauche\n";
+                        
+                    case SDLK_p:
+                        std::cout << "Quitte avec p\n";
+                        exit(12);
+                        
+                        
+                        
+                }
+            }
+            
+            
+            
+            //case SDL_KEYUP:
+        }
+        
+    }
+
 
     
     pause();        //on pause pour que ça ne quitte pas tout de suite la fenetre
